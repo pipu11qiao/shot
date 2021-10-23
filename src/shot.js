@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs-extra')
 const config = require('./config.json');
+const path = require('path');
 const {
     width = 1300, height = 900,
     shotList = [], // 要查询的地址
@@ -47,9 +48,10 @@ async function screenshotPage(browser, pageUrl, outputPath) {
 }
 
 async function main() {
-    await fs.emptyDir('../build')
+    const buildPath = path.resolve(__dirname,'../build')
+    await fs.emptyDir(buildPath)
     const browser = await puppeteer.launch({
-  	args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
         defaultViewport: {
             width,
             height,
@@ -58,7 +60,7 @@ async function main() {
     const pageArr = []
     for (let i = 0; i < pageList.length; i++) {
         const pageObj = pageList[i];
-        pageArr.push(screenshotPage(browser, pageObj.pageUrl, `../build/${pageObj.searchText}-${pageObj.title}.jpeg`));
+        pageArr.push(screenshotPage(browser, pageObj.pageUrl, `${buildPath}/${pageObj.searchText}-${pageObj.title}.jpeg`));
     }
     await Promise.all(pageArr);
     await browser.close();
