@@ -1,0 +1,7 @@
+*.log
+.idea/
+node_modules/
+# static 改成 sv_static
+.DS_Store
+.cache/
+build
