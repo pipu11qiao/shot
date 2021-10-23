@@ -49,6 +49,7 @@ async function screenshotPage(browser, pageUrl, outputPath) {
 async function main() {
     await fs.emptyDir('../build')
     const browser = await puppeteer.launch({
+  	args: ['--no-sandbox', '--disable-setuid-sandbox'],
         defaultViewport: {
             width,
             height,
