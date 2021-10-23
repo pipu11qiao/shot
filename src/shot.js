@@ -1,4 +1,5 @@
 const puppeteer = require('puppeteer');
+const fs = require('fs-extra')
 const config = require('./config.json');
 const {
     width = 1300, height = 900,
@@ -46,6 +47,7 @@ async function screenshotPage(browser, pageUrl, outputPath) {
 }
 
 async function main() {
+    await fs.emptyDir('../build')
     const browser = await puppeteer.launch({
         defaultViewport: {
             width,
